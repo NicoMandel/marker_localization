@@ -1,0 +1,16 @@
+<?xml version='1.0'?>
+<launch>
+
+    <!-- Streaming the Webcam Video. This does not have a config file -->
+     <include file="$(find video_stream_opencv)/launch/webcam.launch"/>
+       
+    <!-- Marker Detection from Kye - includes all the default configs -->
+	 <include file="$(find ml_detector)/launch/marker_detect.launch"/>
+
+    <!-- Displaying the image with the detections -->
+    <node name="image_viewer" pkg="image_view" type="image_view" output="screen">
+        <remap from="image" to="/ml_detector/image_overlay"/>
+    </node>
+        
+   
+</launch>

@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(ml_detector)
 
+set(cv_bridge_DIR /usr/share/cv_bridge/cmake/)
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
