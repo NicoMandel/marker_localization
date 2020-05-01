@@ -508,11 +508,10 @@ int main(int argc, char** argv) {
 
 	} catch (const ros::Exception& e){
 		ROS_ERROR("ROS Exception during Initialization: %s", e.what());
-		return;
 	}
-	
+
 	try{
-	ros::spin();
+		ros::spin();
 	} catch (ros::Exception& e)
 	{
 		ROS_ERROR("ROS Exception during Execution: %s", e.what());
