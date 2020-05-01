@@ -502,9 +502,20 @@ class MarkerDetector {
 
 int main(int argc, char** argv) {
 	ros::init(argc, argv, "ml_detector");
-	MarkerDetector md;
+	try
+	{
+		MarkerDetector md;
 
+	} catch (const ros::Exception& e){
+		ROS_ERROR("ROS Exception during Initialization: %s", e.what());
+		return;
+	}
+	
+	try{
 	ros::spin();
-
+	} catch (ros::Exception& e)
+	{
+		ROS_ERROR("ROS Exception during Execution: %s", e.what());
+	}
 	return 0;
 }
