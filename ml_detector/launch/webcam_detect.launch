@@ -29,7 +29,7 @@
 		<!-- Marker Parameters -->
 		<remap from="~detected_markers" to="/ml_landmarks/detected_markers"/>
         <remap from="~image_raw" to="$(arg image_topic)"/>
-        <remap from="~camera_info" to="$(arg camera_info_topic)"/>
+        <remap from="camera_info" to="$(arg camera_info_topic)"/>
         <param if="$(arg compressed)" name="image_transport" value="compressed"/>
 	</node>
 
