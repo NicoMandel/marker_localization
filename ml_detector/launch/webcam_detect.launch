@@ -1,15 +1,42 @@
 <?xml version='1.0'?>
 <launch>
+    <arg name="video_stream_provider" default="/dev/video1"/>
+    <arg name="visualize" default="false" />
+    <arg name="compressed" default="false"/>      
+	<arg name="image_topic" default="/webcam/image_raw"/>
+	<arg name="camera_info_topic" default="/webcam/camera_info"/>
+    <arg name="detect_name" default="ml_detector"/>
+    
 
     <!-- Streaming the Webcam Video. This does not have a config file -->
-     <include file="$(find video_stream_opencv)/launch/webcam.launch"/>
-       
-    <!-- Marker Detection from Kye - includes all the default configs -->
-	 <include file="$(find ml_detector)/launch/marker_detect.launch"/>
+    <include file="$(find video_stream_opencv)/launch/webcam.launch">
+            <arg name="video_stream_provider" value="$(arg video_stream_provider)"/>
+            <arg name="visualize" value="$(arg visualize)" />
+    </include>
+
+	<node pkg="ml_detector" type="ml_detector_node" name="$(arg detect_name)" clear_params="true" output="screen">
+		<!-- System Parameters -->
+		<param name="system/publish_overlay" value="true" type="boolean"/>
+		<param name="system/send_detailed_tag_info" value="true" type="boolean"/>
+		<param name="system/show_rejected" value="false" type="boolean"/>
+		<param name="system/refine_strategy" value="true" type="boolean"/>
+		<param name="system/camera_is_rectified" value="false" type="boolean"/>
+
+		<!-- Detection Parameters /-->
+		<rosparam command="load" file="$(find ml_detector)/launch/detect_config.yaml"/>
+		<rosparam command="load" file="$(find ml_detector)/launch/board_config.yaml"/>
+
+		<!-- Marker Parameters -->
+		<remap from="~detected_markers" to="/ml_landmarks/detected_markers"/>
+        <remap from="~image_raw" to="$(arg image_topic)"/>
+        <remap from="~camera_info" to="$(arg camera_info_topic)"/>
+        <param if="$(arg compressed)" name="image_transport" value="compressed"/>
+	</node>
+
 
     <!-- Displaying the image with the detections -->
     <node name="image_viewer" pkg="image_view" type="image_view" output="screen">
-        <remap from="image" to="/ml_detector/image_overlay"/>
+        <remap from="image" to="/$(arg detect_name)/image_overlay"/>
     </node>
         
    

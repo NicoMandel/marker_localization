@@ -145,7 +145,7 @@ class MarkerDetector {
 
 				ROS_INFO("Recieved camera info!");
 
-				image_sub_ = it_.subscribe("image_raw", 1, &MarkerDetector::image_cb, this);
+				image_sub_ = it_.subscribe(ros::names::remap("image_raw"), 1, &MarkerDetector::image_cb, this);
 
 				ROS_INFO("Begining detection...");
 			} else {
