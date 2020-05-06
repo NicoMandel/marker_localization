@@ -14,24 +14,28 @@
             <arg name="visualize" value="$(arg visualize)" />
     </include>
 
+    <include file="$(find ml_detector)/launch/marker_detect.launch">
+        <arg name="compressed" value="$(arg compressed)"/>
+    </include>
+<!-- 
 	<node pkg="ml_detector" type="ml_detector_node" name="$(arg detect_name)" clear_params="true" output="screen">
-		<!-- System Parameters -->
+		System Parameters
 		<param name="system/publish_overlay" value="true" type="boolean"/>
 		<param name="system/send_detailed_tag_info" value="true" type="boolean"/>
 		<param name="system/show_rejected" value="false" type="boolean"/>
 		<param name="system/refine_strategy" value="true" type="boolean"/>
 		<param name="system/camera_is_rectified" value="false" type="boolean"/>
 
-		<!-- Detection Parameters /-->
+		Detection Parameters /
 		<rosparam command="load" file="$(find ml_detector)/launch/detect_config.yaml"/>
 		<rosparam command="load" file="$(find ml_detector)/launch/board_config.yaml"/>
 
-		<!-- Marker Parameters -->
+		Marker Parameters
 		<remap from="~detected_markers" to="/ml_landmarks/detected_markers"/>
         <remap from="~image_raw" to="$(arg image_topic)"/>
         <remap from="camera_info" to="$(arg camera_info_topic)"/>
         <param if="$(arg compressed)" name="image_transport" value="compressed"/>
-	</node>
+	</node> -->
 
 
     <!-- Displaying the image with the detections -->
