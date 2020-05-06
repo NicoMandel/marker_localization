@@ -1,10 +1,5 @@
 <?xml version='1.0'?>
 <launch>
-	<arg name="image_topic" default="/webcam/image_raw"/>
-	<arg name="camera_info_topic" default="/webcam/camera_info"/>
-	<arg name="compressed" default="False"/>
-
-	 <!--  -->
 	<node pkg="ml_detector" type="ml_detector_node" name="ml_detector" clear_params="true" output="screen">
 		<!-- System Parameters -->
 		<param name="system/publish_overlay" value="true" type="boolean"/>
@@ -21,9 +16,8 @@
 		<remap from="~detected_markers" to="/ml_landmarks/detected_markers"/>
 
 		<!-- Image Parameters -->
-		<remap from="~camera_info" to="$(arg camera_info_topic)"/>
-		<remap from="~image_raw" to="$(arg image_topic)"/>
-
-		<param if="$(arg compressed)" name="image_transport" value="compressed"/>
+		<remap from="~camera_info" to="/webcam/camera_info"/>
+		<remap from="~image_raw" to="/webcam/image_raw"/>
+		<!--param name="image_transport" value="compressed"/-->
 	</node>
 </launch>
